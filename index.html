@@ -19,7 +19,6 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="css/animate.css"/>
     <link type="text/css" rel="stylesheet" href="css/styles.css"/>
-	<link rel="stylesheet" type="text/css" href="css/default.css" />
 		<link rel="stylesheet" type="text/css" href="css/bookblock.css" />
 		<!-- custom demo style -->
 		<link rel="stylesheet" type="text/css" href="css/demo3.css" />
@@ -30,6 +29,38 @@
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+<script>
+	var xmlhttp = new XMLHttpRequest();
+	var url = "http://cms.cegtechforum.com/home_page/k_posts.json";
+
+	xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        var myArr = JSON.parse(xmlhttp.responseText);
+        myFunction(myArr);
+    }
+};
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+
+	function myFunction(arr) {
+		var out = "";
+		var i;
+		for(i = 0; i < 6; i++) {
+		if(i%2==0){
+		out += '<div class="row"><div class="col s12 m9 l6 pull-s1">';
+		}
+		else{
+		out += '<div class="col s12 m9 l6 push-s1">';
+		}
+			out += '<div class="card">' + '<div class="card-image waves-effect waves-block waves-light"> <img class="activator" src="' + arr[i].full_picture + '"' + ' height="400" width=20>' + '</div>' + '<div class="card-content">' + '<span class="card-title activator grey-text text-darken-4">Kurukshetra<i class="material-icons right">more_vert</i></span>' + '<p><a href="' + arr[i].permalink_url+ '">https://www.facebook.com/kurukshetra.org.in</a></p>' + '</div>' +'<div class="card-reveal">' + '<span class="card-title grey-text text-darken-4">Kurukshetra<i class="material-icons right">close</i></span>' + '<p>' + arr[i].message + '</p>'+'</div></div></div>';
+		if(i%2!=0){
+		out += '</div>';
+		}	
+		}
+		
+		document.getElementById("krk").innerHTML = out;
+}
+</script>
   </head>
 
   <body class="home-page  animated fadeIn" style="visibility:hidden;">
@@ -77,120 +108,10 @@
         </ul>
     </header>
     <main>
-		<div class="container">
-			<div class="main clearfix">
-				<div class="bb-custom-wrapper">			
-					<div id="bb-bookblock" class="bb-bookblock">
-						<div class="bb-item">
-							<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkurukshetra.org.in%2Fposts%2F10153725986802592&width=350&show_text=false&height=554&appId" width="350" height="554" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-						</div>
-						<div class="bb-item">
-							<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkurukshetra.org.in%2Fposts%2F10153723970117592%3A0&width=300&show_text=false&height=581&appId" width="350" height="554" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-						</div>
-						<div class="bb-item">
-							<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkurukshetra.org.in%2Fposts%2F10153401611872592&width=350&show_text=false&height=597&appId" width="350" height="554" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-						</div>
-						<div class="bb-item">
-							<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ftechforum.ceg%2Fposts%2F798487523617809&width=350&show_text=false&height=437&appId" width="350" height="554" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-						</div>
-						<div class="bb-item">
-							<a href="http://drbl.in/dcbE"><img src="images/5.jpg" alt="image05"/></a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div><!-- /container -->
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="js/jquerypp.custom.js"></script>
-		<script src="js/jquery.bookblock.js"></script>
-		<script>
-			var Page = (function() {
-				
-				var config = {
-						$bookBlock : $( '#bb-bookblock' ),
-						$navNext : $( '#bb-nav-next' ),
-						$navPrev : $( '#bb-nav-prev' ),
-						$navFirst : $( '#bb-nav-first' ),
-						$navLast : $( '#bb-nav-last' )
-					},
-					init = function() {
-						config.$bookBlock.bookblock( {
-							speed : 800,
-							direction: 'rtl',
-							shadowSides : 0.8,
-							shadowFlip : 0.7
-						} );
-						initEvents();
-					},
-					initEvents = function() {
-						
-						var $slides = config.$bookBlock.children();
-
-						// add navigation events
-						config.$navNext.on( 'click touchstart', function() {
-							config.$bookBlock.bookblock( 'next' );
-							return false;
-						} );
-
-						config.$navPrev.on( 'click touchstart', function() {
-							config.$bookBlock.bookblock( 'prev' );
-							return false;
-						} );
-
-						config.$navFirst.on( 'click touchstart', function() {
-							config.$bookBlock.bookblock( 'first' );
-							return false;
-						} );
-
-						config.$navLast.on( 'click touchstart', function() {
-							config.$bookBlock.bookblock( 'last' );
-							return false;
-						} );
-						
-						// add swipe events
-						$slides.on( {
-							'swipeleft' : function( event ) {
-								config.$bookBlock.bookblock( 'prev' );
-								return false;
-							},
-							'swiperight' : function( event ) {
-								config.$bookBlock.bookblock( 'next' );
-								return false;
-							}
-						} );
-
-						// add keyboard events
-						$( document ).keydown( function(e) {
-							var keyCode = e.keyCode || e.which,
-								arrow = {
-									left : 37,
-									up : 38,
-									right : 39,
-									down : 40
-								};
-
-							switch (keyCode) {
-								case arrow.left:
-									config.$bookBlock.bookblock( 'next' );
-									break;
-								case arrow.right:
-									config.$bookBlock.bookblock( 'prev' );
-									break;
-							}
-						} );
-					};
-
-					return { init : init };
-
-			})();
-		</script>
-		<script>
-				Page.init();
-		</script>
+		<div class="container">																							
+			<div id="krk"></div>
+		</div>			
     </main>
-
     <footer class="page-footer fixed">
       <div class="container">
           <div class="row">
@@ -229,3 +150,4 @@
   </body>
 
 </html>
+
